@@ -17,6 +17,7 @@ var rotateSpeed=0.5;
 var entity;
 var entityBar = 0;
 var level = 0;
+var levelCount = 0;
 var entityRad = ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3);
 //////////////////
 var polygons = [];
@@ -198,13 +199,14 @@ function entityCollisionCheck() {
 	}
 	if((polygons[level].r*Math.cos(360/polySide/2 * Math.PI / 180)) > (entityRad+5)) {
 		level++;
+		levelCount++;
 	}
 }
 
 function killfunc() {
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	//////////////////
-	document.getElementById("play").innerHTML = "PLAY<br>" + (level*10);
+	document.getElementById("play").innerHTML = "PLAY<br>" + (levelCount*10);
 
 	///////////////////
 
@@ -214,6 +216,7 @@ function killfunc() {
 
 	entityBar = 0;
 	level = 0;
+	levelCount = 0;
 //////////////////
 	polygons = [];
 	polySide = 6;
