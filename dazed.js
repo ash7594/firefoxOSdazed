@@ -203,6 +203,11 @@ function entityCollisionCheck() {
 
 function killfunc() {
 	ctx.clearRect(0,0,canvas.width,canvas.height);
+	//////////////////
+	document.getElementById("play").innerHTML = "PLAY<br>" + (level*10);
+
+	///////////////////
+
 	windowA = 0;
 	died = 0;
 	rotateSpeed=0.5;
