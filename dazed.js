@@ -205,10 +205,41 @@ function killfunc() {
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	windowA = 0;
 	died = 0;
+	rotateSpeed=0.5;
 
-	if(aud == true)
+	entityBar = 0;
+	level = 0;
+//////////////////
+	polygons = [];
+	polySide = 6;
+	polygonWait = 100;
+	polygonWaitCount = 0;
+	lineWidthJumpWait = 50;
+	lineWidthJumpCount = 0;
+	lineFlag = 0;
+	polygonLineWidth = 1;
+//////////////////
+	colorShift2 = 0;
+	colorShift1 = 0;
+	colorShift3 = false;
+	colorShift4 = false;
+	colorChangeControlFlag = 0;
+	colorChangeMax = 4;
+//////////////////
+	pressedKey = -1;
+//////////////////
+	z=0;
+	track=[];
+	dur=[];
+	tol=[];
+	flag=1;	
+	h=1;
+
+	if(aud == true) {
+		aud=false;
 		document.getElementById("audio").pause();
-
+		document.getElementById("audio").currentTime = 0;
+	}
 	document.getElementById("menu").style.display="block";
 	MenuGenerate();
 }
@@ -278,7 +309,7 @@ function Side(e)
 	polySide=e;
 }
 
-var h;
+var h=1;
 
 function Choice(e){
 	aud=false;
@@ -308,7 +339,6 @@ function Choice(e){
 		aud=true;
 	}
 }
-var h=1;
 function hard(){
 	h=2;polygonWait=75;
 }
