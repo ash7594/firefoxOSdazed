@@ -15,6 +15,9 @@ canvas.style.top = (windowHeight - canvas.height)/2;
 var rotateSpeed=0.5;
 //////////////////
 var entity;
+var entityBar = 0;
+var level = 0;
+var entityRad = ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3);
 //////////////////
 var polygons = [];
 var polySide = 6;
@@ -40,9 +43,9 @@ var colorChangeControlFlag = 0;
 var colorChangeMax = 4;
 //////////////////
 var pressedKey = -1;
+var gameInterval;
+var died = 0;
 //////////////////
-
-
 
 window.addEventListener("keydown",keyPress);
 window.addEventListener("keyup",keyRelease);
@@ -92,6 +95,7 @@ function polygonSpawn() {
 
 function polygonDestruct() {
 	polygons.shift();
+	level--;
 }
 
 function entityRender() {
@@ -131,9 +135,15 @@ function entityUpdate() {
 	if(pressedKey == 37) {
 		entity.a -= 360/polySide;
 		pressedKey = -1;
+		entityBar--;
+		if(entityBar<0)
+			entityBar = polySide-1;
 	} else if(pressedKey == 39) {
 		entity.a += 360/polySide;
 		pressedKey = -1;
+		entityBar++;
+		if(entityBar>=polySide)
+			entityBar = 0;
 	}
 
 	entity.x = windowCX + ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3)*Math.cos(entity.a*Math.PI/180);
@@ -181,6 +191,28 @@ function backgroundGen() {
 	}
 }
 
+function entityCollisionCheck() {
+	if(entityBar != polygons[level].mbar && (polygons[level].r*Math.cos(360/polySide/2 * Math.PI / 180)) >= (entityRad-5) && (polygons[level].r*Math.cos(360/polySide/2 * Math.PI / 180)) <= (entityRad+5)) {
+		clearInterval(gameInterval);
+		died = 1;
+	}
+	if((polygons[level].r*Math.cos(360/polySide/2 * Math.PI / 180)) > (entityRad+5)) {
+		level++;
+	}
+}
+
+function killfunc() {
+	ctx.clearRect(0,0,canvas.width,canvas.height);
+	windowA = 0;
+	died = 0;
+
+	if(aud == true)
+		document.getElementById("audio").pause();
+
+	document.getElementById("menu").style.display="block";
+	MenuGenerate();
+}
+
 var z=0;
 var len;
 var track=[];
@@ -215,6 +247,8 @@ function gameframe() {
 	windowA += rotateSpeed;
 	entity.a += rotateSpeed;
 	entityUpdate();
+	if(level<polygons.length)
+		entityCollisionCheck();
 	backgroundGen();
 	polygonRender();
 	entityRender();
@@ -222,20 +256,21 @@ function gameframe() {
 	counter++;
 	if(counter==dur[z]){ z=(z+1)%len; counter=0;toggle();}
 
+	if(died == 1)
+		killfunc();
+
 }
 
 var aud=false;
 
-function playSys()
-{
-	var ctx = document.getElementById("canvasMenu").getContext('2d');
+function playSys() {
 	ctx.clearRect(0,0,windowWidth,windowHeight);
-	document.getElementById("menu").innerHTML="";
+	document.getElementById("menu").style.display="none";
 	if(aud==true)
 		document.getElementById("audio").play();
-entitySpawn();
-polygonSpawn();
-setInterval(gameframe,17);
+	entitySpawn();
+	polygonSpawn();
+	gameInterval = setInterval(gameframe,17);
 }
 
 function Side(e)
@@ -282,51 +317,45 @@ function easy(){
 } 
 
 function MenuGenerate() {
-	var canvas1 = document.getElementById("canvasMenu");
-	canvas1.width = windowWidth * 0.99;
-	canvas1.height = windowHeight * 0.99;
-	canvas1.style.position = "absolute";
-	canvas1.style.left = (windowWidth - canvas.width)/2;
-	canvas1.style.top = (windowHeight - canvas.height)/2;
-	var cty = canvas1.getContext('2d');
+	//var canvas1 = document.getElementById("canvasMenu");
 	var backRad1 = backRad;
 	for(var i=0;i<polySide;i++) {
-		cty.beginPath();
-		cty.moveTo(windowCX,windowCY);
-		cty.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
+		ctx.beginPath();
+		ctx.moveTo(windowCX,windowCY);
+		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
 		i++;
-		cty.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
-		cty.lineTo(windowCX,windowCY);
+		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
+		ctx.lineTo(windowCX,windowCY);
 		i--;
-		cty.fillStyle=colorMenuRed[i];
-		cty.fill();
-		cty.closePath();
+		ctx.fillStyle=colorMenuRed[i];
+		ctx.fill();
+		ctx.closePath();
 	}
 	backRad1=backRad1*2/3;
 
 	for(var i=0;i<polySide;i++) {
-		cty.beginPath();
-		cty.moveTo(windowCX,windowCY);
-		cty.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
+		ctx.beginPath();
+		ctx.moveTo(windowCX,windowCY);
+		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
 		i++;
-		cty.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
-		cty.lineTo(windowCX,windowCY);
+		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
+		ctx.lineTo(windowCX,windowCY);
 		i--;
-		cty.fillStyle=colorMenuRed[i+6];
-		cty.fill();
-		cty.closePath();
+		ctx.fillStyle=colorMenuRed[i+6];
+		ctx.fill();
+		ctx.closePath();
 	}
 
 	backRad1=backRad1/3;
 
-	cty.beginPath();
-	cty.moveTo(windowCX+backRad1*Math.cos((windowA)*Math.PI/180),windowCY+backRad1*Math.sin((windowA)*Math.PI/180));
+	ctx.beginPath();
+	ctx.moveTo(windowCX+backRad1*Math.cos((windowA)*Math.PI/180),windowCY+backRad1*Math.sin((windowA)*Math.PI/180));
 	for(var i=1;i<polySide;i++) {
-		cty.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
+		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
 	}
-	cty.fillStyle=colorMenuRed[15];
-	cty.fill();
-	cty.closePath();
+	ctx.fillStyle=colorMenuRed[15];
+	ctx.fill();
+	ctx.closePath();
 }
 
 MenuGenerate();
