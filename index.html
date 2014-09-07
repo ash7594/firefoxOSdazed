@@ -1,0 +1,64 @@
+<html>
+<head>
+<!--Dazed IngeniusHack 6 September 2014 1200 HRS-->
+</head>
+
+<style>
+
+*{
+	margin: 0px;
+	padding: 0px;
+}
+
+body{
+	background-color: #000000;
+}
+
+#canvas{
+	border-radius: 10px;
+}
+
+.but {
+	position:absolute;
+	background:rgba(0,0,0,0);
+	border:0;
+	color:rgba(0,0,0,0.7);
+//	font-size:100%;
+	font-family:arial;
+}
+
+</style>
+
+<body>
+
+<canvas id="canvas"></canvas>
+<audio id="audio" src="music.mp3"></audio>s
+<div id="menu">
+<canvas id="canvasMenu" style=""></canvas>
+<button class="but" style="left:41%;width:18%;top:30%;height:40%;" onclick="playSys()">PLAY</button>
+<button class="but" style="left:22%;width:16%;top:5%;height:44%;" onclick="Choice(1)">Simple</button>
+<button class="but" style="left:22%;width:16%;top:50%;height:44%;" onclick="Choice(3)">Toggle</button>
+<button class="but" style="left:61%;width:16%;top:50%;height:44%;" onclick="Choice(7)">Mix MAtch</button>
+<button class="but" style="left:61%;width:16%;top:5%;height:44%;" onclick="Choice(4)">Music Roll</button>
+<button class="but" style="left:3%;width:16%;top:1%;height:44%;" onclick="Choice(2)">Swing</button>
+<button class="but" style="left:3%;width:16%;top:51%;height:44%;">Discrete</button>
+<button class="but" style="left:81%;width:16%;top:51%;height:44%;">Free Style</button>
+<button class="but" style="left:81%;width:16%;top:1%;height:44%;">twist</button>
+<button class="but" style="left:41%;width:16%;top:1%;height:12%;" onclick="hard()">HARD</button>
+<button class="but" style="left:41%;width:16%;top:14%;height:14%;"onclick="easy()">EASY</button>
+<button class="but" style="left:42%;width:5%;top:80%;height:8%;" onclick="Side(3)">3</button>
+<button class="but" style="left:52%;width:5%;top:80%;height:8%;" onclick="Side(4)">4</button>
+<button class="but" style="left:41%;width:5%;top:90%;height:8%;" onclick="Side(5)">5</button>
+<button class="but" style="left:47%;width:5%;top:90%;height:8%;" onclick="Side(6)">6</button>
+<button class="but" style="left:53%;width:5%;top:90%;height:8%;" onclick="Side(10)">10</button>
+</div>
+
+<script type="text/javascript" src="dazed.js">
+</script>
+<script>
+var butt=document.getElementsByClassName("but");
+for(i=0;i<butt.length;i++)
+butt[i].style.fontSize=window.innerWidth/25+'px';
+</script>
+</body>
+</html>

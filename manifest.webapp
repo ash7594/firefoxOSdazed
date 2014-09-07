@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "name": "Dazed",
+  "description": "dazed",
+  "launch_path": "/index.html",
+  "fullscreen": "true",
+  "orientation": "landscape-primary",
+  "icons": {
+    "128": "/images/icon_128.jpg",
+    "32": "/images/icon_32.jpg",
+	"60": "/images/icon_60.jpg",
+	"90": "/images/icon_90.jpg",
+	"120": "/images/icon_120.jpg",
+	"256": "/images/icon_256.jpg"
+  },
+  "developer": {
+    "name": "Ashutosh Nath Agarwal",
+    "url": "https://mozillians.org/en-US/u/ashutosh7594/"
+  },
+  "default_locale": "en"
+}
