@@ -28,6 +28,9 @@ var lineWidthJumpWait = 50;
 var lineWidthJumpCount = 0;
 var lineFlag = 0;
 var polygonLineWidth = 1;
+var skewVal = 0;
+var skewMax = 30;
+var skewBy = 0.1;
 //////////////////
 
 var colorMenuRed = ["#1F0000","#2E0000","#3D0000","#4C0000","#5C0000","#6B0000","#7A0000",,"#8A0000","#990000","#A31919","#AD3333","#B84D4D","#C26666","#CC8080,#D69999","#E0B2B2","#EBCCCC","#F5E6E6","#FFFFFF"];
@@ -205,6 +208,8 @@ function entityCollisionCheck() {
 }
 
 function killfunc() {
+	canvas.style.transform = ("skew(0deg)");
+	skewVal = 0;
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	//////////////////
 	document.getElementById("play").innerHTML = "PLAY<br>" + (levelCount*10);
@@ -296,6 +301,11 @@ function gameframe() {
 	counter++;
 	if(counter==dur[z]){ z=(z+1)%len; counter=0;toggle();}
 
+	canvas.style.transform = ("skew("+skewVal+"deg)");
+	if(skewVal>=skewMax) skewBy*=-1;
+	else if(skewVal<=-1*skewMax) skewBy*=-1;
+	skewVal += skewBy;
+
 	if(died == 1)
 		killfunc();
 
@@ -383,6 +393,7 @@ function resizeToMinimum(w,h){
 function MenuGenerate() {
 	Choice(4);
 	counter=0;
+	skewVal = 0;
 	backRad = (windowWidth < windowHeight)?windowWidth/2+canvas.width/6:windowHeight/2+canvas.height/6;
 	globalflagresize = true;
 	var backRad1 = backRad;

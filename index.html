@@ -1,6 +1,6 @@
 <html>
 <head>
-<!--Dazed IngeniusHack 6 September 2014 1200 HRS-->
+	<title>DAZED</title>
 </head>
 
 <style>
@@ -12,10 +12,12 @@
 
 body{
 	background-color: #000000;
+	overflow: hidden;
 }
 
 #canvas{
 	border-radius: 10px;
+	transform: skew(0deg);
 }
 
 .body {
@@ -43,9 +45,24 @@ body{
 	font-size: 5vmin;
 }
 
+.option {
+	color:rgba(0,0,255,1) !important;
+}
+
 </style>
 
 <body>
+
+<div>
+<center>
+<BR>	
+<strong><span id="title" style="color:red; font-size:7vmin">DAZED</span></strong><BR>
+<span style="color:white; font-size:5vmin">
+	<ul><span class="option">(Option1)</span> &nbspUse arrow keys ( L,R )</ul>
+	<ul><span class="option">(Option2)</span> &nbspMouse click on L/R side</ul>
+</span>
+</center>
+</div>
 
 <canvas id="canvas"></canvas>
 <audio id="audio" src="music.mp3"></audio>
