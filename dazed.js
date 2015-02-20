@@ -444,8 +444,8 @@ playPad.addEventListener("click", function() {
 
 var buttonsHTML = document.getElementsByClassName("but");
 for(var i=0;i<4;i++) {
-	buttonsHTML[0].addEventListener("click",function() {
-		Side(buttonsHTML[0].dataset.side);
+	buttonsHTML[i].addEventListener("click",function() {
+		Side(buttonsHTML[i].dataset.side);
 	});
 }
 
