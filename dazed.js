@@ -450,7 +450,7 @@ function launchIntoFullscreen(element) {
   }
 }
 
-var playPad = document.getElementById("playPad");
+var playPad = document.getElementById("play");
 playPad.addEventListener("click", function() {
     var
       el = document.documentElement
