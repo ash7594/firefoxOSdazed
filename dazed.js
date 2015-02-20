@@ -382,6 +382,7 @@ function resizeToMinimum(w,h){
 
 function MenuGenerate() {
 	Choice(4);
+	counter=0;
 	backRad = (windowWidth < windowHeight)?windowWidth/2+canvas.width/6:windowHeight/2+canvas.height/6;
 	globalflagresize = true;
 	var backRad1 = backRad;
