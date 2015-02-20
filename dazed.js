@@ -51,6 +51,7 @@ var died = 0;
 window.addEventListener("keydown",keyPress);
 window.addEventListener("keyup",keyRelease);
 window.addEventListener("click",firefoxOScontrol);
+window.addEventListener('resize', function(){resizeToMinimum(400,400)}, false);
 
 function keyPress(e) {
 	pressedKey = e.keyCode;
@@ -301,8 +302,11 @@ function gameframe() {
 }
 
 var aud=false;
+var globalflagresize = true;
 
 function playSys() {
+	globalflagresize = false;
+	backRad = (windowWidth > windowHeight)?windowWidth/2+canvas.width/30:windowHeight/2+canvas.height/30;
 	ctx.clearRect(0,0,windowWidth,windowHeight);
 	document.getElementById("menu").style.display="none";
 	if(aud==true)
@@ -354,10 +358,34 @@ function easy(){
 	h=1;polygonWait=100;
 } 
 
-function MenuGenerate() {
+function resizeToMinimum(w,h){
+    windowWidth = window.innerWidth;
+	windowHeight = window.innerHeight;
+	
+	canvas.width = windowWidth * 0.99;
+	canvas.height = windowHeight * 0.99;
+	windowCX = canvas.width/2;
+	windowCY = canvas.height/2;
+	//windowA = 0;
+	backRad = (windowWidth > windowHeight)?windowWidth/2+canvas.width/30:windowHeight/2+canvas.height/30;
+
+	canvas.style.left = (windowWidth - canvas.width)/2;
+	canvas.style.top = (windowHeight - canvas.height)/2;
+
+	entityRad = ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3);
 	//var canvas1 = document.getElementById("canvasMenu");
+	if(globalflagresize == true) {
+		backRad = (windowWidth < windowHeight)?windowWidth/2+canvas.width/30:windowHeight/2+canvas.height/30;
+		MenuGenerate();
+	}
+}
+
+function MenuGenerate() {
+	Choice(4);
+	backRad = (windowWidth < windowHeight)?windowWidth/2+canvas.width/6:windowHeight/2+canvas.height/6;
+	globalflagresize = true;
 	var backRad1 = backRad;
-	for(var i=0;i<polySide;i++) {
+	/*for(var i=0;i<polySide;i++) {
 		ctx.beginPath();
 		ctx.moveTo(windowCX,windowCY);
 		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
@@ -368,10 +396,10 @@ function MenuGenerate() {
 		ctx.fillStyle=colorMenuRed[i];
 		ctx.fill();
 		ctx.closePath();
-	}
-	backRad1=backRad1*2/3;
+	}*/
+	//backRad1=backRad1*2/3;
 
-	for(var i=0;i<polySide;i++) {
+	/*for(var i=0;i<polySide;i++) {
 		ctx.beginPath();
 		ctx.moveTo(windowCX,windowCY);
 		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
@@ -382,7 +410,7 @@ function MenuGenerate() {
 		ctx.fillStyle=colorMenuRed[i+6];
 		ctx.fill();
 		ctx.closePath();
-	}
+	}*/
 
 	backRad1=backRad1/3;
 
