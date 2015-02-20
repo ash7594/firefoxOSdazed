@@ -1,4 +1,4 @@
-
+(function(){
 var canvas = document.getElementById("canvas");
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
@@ -213,10 +213,14 @@ function killfunc() {
 	skewVal = 0;
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 	//////////////////
-	document.getElementById("play").innerHTML = "PLAY<br>" + (levelCount*10);
+	var hs = 0;
+	if(localStorage.getItem("highScore")!=null) hs = localStorage.getItem("highScore");
+	if(hs<(levelCount*10)) {localStorage.setItem("highScore",levelCount*10); hs=levelCount*10;}
+	document.getElementById("play").innerHTML = "PLAY<br>" + (levelCount*10) + "<br>Max:&nbsp" + hs;
 
 	///////////////////
 
+	counter = 0;
 	windowA = 0;
 	died = 0;
 	rotateSpeed=0.5;
@@ -399,32 +403,7 @@ function MenuGenerate() {
 	backRad = (windowWidth < windowHeight)?windowWidth/2+canvas.width/3:windowHeight/2+canvas.height/3;
 	globalflagresize = true;
 	var backRad1 = backRad;
-	/*for(var i=0;i<polySide;i++) {
-		ctx.beginPath();
-		ctx.moveTo(windowCX,windowCY);
-		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
-		i++;
-		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
-		ctx.lineTo(windowCX,windowCY);
-		i--;
-		ctx.fillStyle=colorMenuRed[i];
-		ctx.fill();
-		ctx.closePath();
-	}*/
-	//backRad1=backRad1*2/3;
-
-	/*for(var i=0;i<polySide;i++) {
-		ctx.beginPath();
-		ctx.moveTo(windowCX,windowCY);
-		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
-		i++;
-		ctx.lineTo(windowCX+backRad1*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad1*Math.sin((windowA+i*360/polySide)*Math.PI/180));
-		ctx.lineTo(windowCX,windowCY);
-		i--;
-		ctx.fillStyle=colorMenuRed[i+6];
-		ctx.fill();
-		ctx.closePath();
-	}*/
+	
 
 	backRad1=backRad1/3;
 
@@ -460,6 +439,22 @@ playPad.addEventListener("click", function() {
         || el.mozRequestFullScreen
     ;
     rfs.call(el);
+    playSys();
+});
+
+var buttonsHTML = document.getElementsByClassName("but");
+buttonsHTML[0].addEventListener("click",function() {
+	Side(buttonsHTML[0].dataset.side);
+});
+buttonsHTML[1].addEventListener("click",function() {
+	Side(buttonsHTML[1].dataset.side);
+});
+buttonsHTML[2].addEventListener("click",function() {
+	Side(buttonsHTML[2].dataset.side);
+});
+buttonsHTML[3].addEventListener("click",function() {
+	Side(buttonsHTML[3].dataset.side);
 });
 
 MenuGenerate();
+})();
