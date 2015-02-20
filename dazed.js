@@ -13,6 +13,7 @@ canvas.style.position = "absolute";
 canvas.style.left = (windowWidth - canvas.width)/2;
 canvas.style.top = (windowHeight - canvas.height)/2;
 var rotateSpeed=0.5;
+var firstTime = true;
 //////////////////
 var entity;
 var entityBar = 0;
@@ -315,6 +316,7 @@ var aud=false;
 var globalflagresize = true;
 
 function playSys() {
+	firstTime = false;
 	globalflagresize = false;
 	backRad = (windowWidth > windowHeight)?windowWidth/2+canvas.width/30:windowHeight/2+canvas.height/30;
 	ctx.clearRect(0,0,windowWidth,windowHeight);
@@ -385,7 +387,7 @@ function resizeToMinimum(w,h){
 	entityRad = ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3);
 	//var canvas1 = document.getElementById("canvasMenu");
 	if(globalflagresize == true) {
-		backRad = (windowWidth < windowHeight)?windowWidth/2+canvas.width/30:windowHeight/2+canvas.height/30;
+		backRad = (windowWidth < windowHeight)?windowWidth/2+canvas.width/3:windowHeight/2+canvas.height/3;
 		MenuGenerate();
 	}
 }
@@ -394,7 +396,7 @@ function MenuGenerate() {
 	Choice(4);
 	counter=0;
 	skewVal = 0;
-	backRad = (windowWidth < windowHeight)?windowWidth/2+canvas.width/6:windowHeight/2+canvas.height/6;
+	backRad = (windowWidth < windowHeight)?windowWidth/2+canvas.width/3:windowHeight/2+canvas.height/3;
 	globalflagresize = true;
 	var backRad1 = backRad;
 	/*for(var i=0;i<polySide;i++) {
@@ -435,5 +437,29 @@ function MenuGenerate() {
 	ctx.fill();
 	ctx.closePath();
 }
+
+function launchIntoFullscreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+
+var playPad = document.getElementById("playPad");
+playPad.addEventListener("click", function() {
+    var
+      el = document.documentElement
+    , rfs =
+           el.requestFullScreen
+        || el.webkitRequestFullScreen
+        || el.mozRequestFullScreen
+    ;
+    rfs.call(el);
+});
 
 MenuGenerate();
