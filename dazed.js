@@ -443,18 +443,11 @@ playPad.addEventListener("click", function() {
 });
 
 var buttonsHTML = document.getElementsByClassName("but");
-buttonsHTML[0].addEventListener("click",function() {
-	Side(buttonsHTML[0].dataset.side);
-});
-buttonsHTML[1].addEventListener("click",function() {
-	Side(buttonsHTML[1].dataset.side);
-});
-buttonsHTML[2].addEventListener("click",function() {
-	Side(buttonsHTML[2].dataset.side);
-});
-buttonsHTML[3].addEventListener("click",function() {
-	Side(buttonsHTML[3].dataset.side);
-});
+for(var i=0;i<4;i++) {
+	buttonsHTML[0].addEventListener("click",function() {
+		Side(buttonsHTML[0].dataset.side);
+	});
+}
 
 MenuGenerate();
 })();
